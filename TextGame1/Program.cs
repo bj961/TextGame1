@@ -35,7 +35,6 @@ namespace TextGame1
             Console.WriteLine("ddd");
 
             Shop shop = new Shop();
-            shop.InitShop();
 
 
             while (isPlaying)

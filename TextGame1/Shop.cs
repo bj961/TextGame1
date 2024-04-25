@@ -10,7 +10,10 @@ namespace TextGame1
     {
         public List<Item> Items { get; set; }
 
-        public Shop() { new List<Item>(); }
+        public Shop()
+        {
+            Items = DataManager.LoadItemCSV("Items.csv");//new List<Item>(); 
+        }
 
         //isEquipped 이용하여 판매여부 판단 예정. true이면 판매된 상품
         public void PrintShopItems()
@@ -54,12 +57,8 @@ namespace TextGame1
         public void InitShop()
         {
             //Items.Clear();
-            //LoadCSV("Items.csv");
+            Items = DataManager.LoadItemCSV("Items.csv");
         }
- 
-        /*
-        
 
-        */
     }
 }
