@@ -54,42 +54,11 @@ namespace TextGame1
         public void InitShop()
         {
             //Items.Clear();
-            LoadCSV("Items.csv");
+            //LoadCSV("Items.csv");
         }
-        void LoadCSV(string filename)
-        {
-
-        }
+ 
         /*
-        public static void LoadCSV(string filepath)
-        {
-            List<Item> Items = new List<Item>();
-
-            var lines = File.ReadAllLines(filepath);
-
-            foreach (var line in lines)
-            {
-                var fields = line.Split(',');
-
-                var item = new Item
-                {
-                    ID = int.Parse(fields[0]),
-                    Name = fields[1],
-                    Cost = int.Parse(fields[2]),
-                    ItemType = (eItemType)Enum.Parse(typeof(eItemType), fields[3]),
-                    EquipStatus = new Dictionary<eStatus, int>
-                    {
-                        { eStatus.HP, int.Parse(fields[4]) },
-                        { eStatus.ATK, int.Parse(fields[5]) },
-                        { eStatus.DEF, int.Parse(fields[6]) }
-                    },
-                    Description = fields[7]
-                };
-
-                Items.Add(item);
-            }
         
-        }
 
         */
     }

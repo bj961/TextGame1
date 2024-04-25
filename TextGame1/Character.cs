@@ -96,18 +96,6 @@ namespace TextGame1
             Console.WriteLine($"GOLD : {Gold} G");
         }
 
-        void UpdateEquip()
-        {
-            for(int i = 0; i < Inventory.Items.Count; i++)
-            {
-                if (Inventory.Items[i].IsEquipped == true)
-                {
-                    ItemEquipManagement(i);
-                }
-            }
-        }
-
-
         // itemIdx는 인벤토리의 인덱스
         // 인덱스를 받아 해당 아이템의 장착/해제를 수행하는 메소드
         public void ItemEquipManagement(int itemIdx)
@@ -141,8 +129,6 @@ namespace TextGame1
                 //아이템 장착
                 EquipItem(itemIdx);
             }
-
-            //Console.ReadLine();
         }
 
         public void UnequipItem(int itemIdx)

@@ -8,11 +8,13 @@ namespace TextGame1
 {
     internal class ItemDB
     {
+
+
         //public static List<Item> Items = LoadCSV("Items.csv");
 
 
         /*
-        public static List<Item> LoadCSV(string filepath)
+        public static void LoadCSV(string filepath)
         {
             List<Item> Items = new List<Item>();
 
@@ -39,8 +41,7 @@ namespace TextGame1
 
                 Items.Add(item);
             }
-
-            return Items;
+        
         }
 
         */

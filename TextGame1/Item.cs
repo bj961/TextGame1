@@ -42,11 +42,8 @@ namespace TextGame1
             Cost = cost;
             EquipStatus = equipStatus;
             Description = description;
-            //IsEquipped = isEquipped;
             ItemType = itemType;
         }
-        
-
 
     }
 }
