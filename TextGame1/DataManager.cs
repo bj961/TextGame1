@@ -11,8 +11,15 @@ namespace TextGame1
     internal class DataManager
     {
 
-
-
+        public static void Test(string filepath)
+        {
+            StreamReader file = new StreamReader(filepath);
+            while(!file.EndOfStream)
+            {
+                var line = file.ReadLine();
+                Console.WriteLine(line);
+            }
+        }
 
         public static void LoadItemCSV(string filepath, out List<Item> Items)
         {
@@ -55,6 +62,7 @@ namespace TextGame1
                 Items.Add(item);
             }
 
+            file.Close();
         }
 
     }

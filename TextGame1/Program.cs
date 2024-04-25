@@ -18,23 +18,24 @@ namespace TextGame1
         {
             bool isPlaying = true;
             int input;
-            
 
+            //상점 초기화
+            string filepath = @"..\..\..\ShopItems.csv";
+            Shop shop = new Shop(filepath);
 
             Console.Write("플레이어 이름을 입력하세요: ");
             Character player = new Character(Console.ReadLine());
 
             // 테스트용 초기 아이템. 추후 CSV 파일 활용해 읽어올 예정
-            
             player.Inventory.AddItem(new Item(0, "무쇠갑옷", 1000, eItemType.Chest, new Dictionary<eStatus, int> { { eStatus.DEF, 5 } }, "무쇠로 만들어져 튼튼한 갑옷입니다."));
             player.Inventory.AddItem(new Item(1, "스파르타의 창", 1500, eItemType.Weapon, new Dictionary<eStatus, int> { { eStatus.ATK, 7 } }, "스파르타의 전사들이 사용했다는 전설의 창입니다."));
             player.Inventory.AddItem(new Item(2, "낡은 나무 방패", 500, eItemType.Shield, new Dictionary<eStatus, int> { { eStatus.DEF, 2 } }, "쉽게 볼 수 있는 낡은 방패 입니다."));
             player.Inventory.AddItem(new Item(3, "낡은 검", 500, eItemType.Weapon, new Dictionary<eStatus, int> { { eStatus.ATK, 2 } }, "쉽게 볼 수 있는 낡은 검 입니다."));
             player.Inventory.AddItem(new Item(4, "광전사의 목걸이", 1500, eItemType.Amulet, new Dictionary<eStatus, int> { { eStatus.ATK, 7 }, { eStatus.DEF, -3 } }, "공격성을 증폭시키는 광전사의 목걸이입니다."));
+
             
 
-            string filepath = @"..\..\..\ShopItems.csv";
-            Shop shop = new Shop(filepath);
+            
 
 
             while (isPlaying)

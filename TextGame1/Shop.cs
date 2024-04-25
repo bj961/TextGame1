@@ -17,7 +17,8 @@ namespace TextGame1
         }
         public Shop(string filepath)
         {
-            DataManager.LoadItemCSV(filepath, out shop);//new List<Item>(); 
+            DataManager.LoadItemCSV(filepath, out shop); 
+            //DataManager.LoadItemCSV(filepath, shop);
         }
 
         //isEquipped 이용하여 판매여부 판단 예정. true이면 판매된 상품
