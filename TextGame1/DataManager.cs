@@ -19,7 +19,6 @@ namespace TextGame1
             StreamReader file = new StreamReader(filepath);
             Items = new List<Item>();
 
-            //var lines = File.ReadAllLines(filepath);
             var line = file.ReadLine();
 
             while (!file.EndOfStream)
