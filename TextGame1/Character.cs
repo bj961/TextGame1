@@ -123,10 +123,9 @@ namespace TextGame1
                     Console.WriteLine($"{TypeOfSelectedItem} 슬롯에는 이미 장착된 아이템이 있습니다.");
                     Console.WriteLine($"장착 중인 아이템 : {Inventory.Items[idxOfEquipedItem].Name}");
                     Console.ReadLine();
+                    return;
                 }
-                
-                
-                return;
+
             }
             
 
@@ -154,12 +153,8 @@ namespace TextGame1
             equippedItems.Remove(TypeOfSelectedItem); // 착용 부위 플래그 해제
             foreach (var stat in Inventory.Items[itemIdx - 1].EquipStatus) // 능력치 변동 해제
             {
-                //Console.WriteLine($"#디버그# 변경 전 캐릭터 Status {stat.Key} : {Status[(int)stat.Key]}");
-                //Console.WriteLine($"#디버그# 변경 전 장비변동 Status {stat.Key} : {equippedItemStat[(int)stat.Key]}");
                 Status[(int)stat.Key] -= stat.Value;
                 equippedItemStat[(int)stat.Key] -= stat.Value;
-                //Console.WriteLine($"#디버그# 변경 후 캐릭터 Status {stat.Key} : {Status[(int)stat.Key]}");
-                //Console.WriteLine($"#디버그# 변경 후 장비변동 Status {stat.Key} : {equippedItemStat[(int)stat.Key]}");
             }
         }
 
@@ -171,15 +166,8 @@ namespace TextGame1
             equippedItems[TypeOfSelectedItem] = itemIdx - 1; // 착용 부위 플래그 적용
             foreach (var stat in Inventory.Items[itemIdx - 1].EquipStatus) // 능력치 변동 적용
             {
-
-                //Console.WriteLine($"#디버그# 변경 전 캐릭터 Status {stat.Key} : {Status[(int)stat.Key]}");
-                //Console.WriteLine($"#디버그# 변경 전 장비변동 Status {stat.Key} : {equippedItemStat[(int)stat.Key]}");
-
                 Status[(int)stat.Key] += stat.Value;
                 equippedItemStat[(int)stat.Key] += stat.Value;
-
-                //Console.WriteLine($"#디버그# 변경 후 캐릭터 Status {stat.Key} : {Status[(int)stat.Key]}");
-                //Console.WriteLine($"#디버그# 변경 후 장비변동 Status {stat.Key} : {equippedItemStat[(int)stat.Key]}");
             }
         }
 
