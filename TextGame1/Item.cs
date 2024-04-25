@@ -40,9 +40,20 @@ namespace TextGame1
             ID = id;
             Name = name;
             Cost = cost;
-            EquipStatus = equipStatus;
+            EquipStatus = new Dictionary<eStatus, int>(equipStatus);
             Description = description;
             ItemType = itemType;
+        }
+
+        public Item(Item item)
+        {
+            ID = item.ID;
+            Name = item.Name;
+            Cost = item.Cost;
+            EquipStatus = new Dictionary<eStatus, int>(item.EquipStatus);
+            Description = item.Description;
+            IsEquipped = item.IsEquipped;
+            ItemType = item.ItemType;
         }
 
     }

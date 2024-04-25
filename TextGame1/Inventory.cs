@@ -46,25 +46,9 @@ namespace TextGame1
                 }
                 
 
-                Console.WriteLine("{0,-4} {1,-5} {2,-20} {3,-20} {4,-30}", i++.ToString().PadRight(5), equippedString.PadRight(5), item.Name.PadRight(20), statsString.PadRight(20), item.Description);
+                Console.WriteLine("{0,-4} {1,-5} {2,-20} {3,-20} {4,-30}", i++, equippedString, item.Name.PadRight(20, ' '), statsString.PadRight(20), item.Description);
             }
         }
 
-
-        public void ViewInventory()
-        {
-            Console.WriteLine("{0,-5} {1,-5} {2,-20} {3,-30}", "No.", "장비", "이름", "스탯", "설명");
-            Console.WriteLine(new string('-', 60));
-
-            int i = 1;
-            foreach (var item in Items)
-            {
-                string equippedString = item.IsEquipped ? "[E]" : " ";
-                string statsString = string.Join(" ", item.EquipStatus);
-                Console.WriteLine("{0,-5}, {1,-5} {2,-20} {3,-30} {4, -30}",i++, equippedString, item.Name, statsString, item.Description);
-            }
-        }
-
-        
     }
 }
