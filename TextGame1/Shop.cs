@@ -170,11 +170,6 @@ namespace TextGame1
 
         }
 
-        void BuyItem(Character character, int itemIdx)
-        {
-
-        }
-
 
         public int SellItemMenu(Character character)
         {
@@ -207,7 +202,7 @@ namespace TextGame1
                 }
 
 
-                Console.WriteLine("- {0,-3}{1,-3}{2,-20}| {3,-15}| {4,-30}| {5, -10}", i++, equippedString, item.Name.PadRight(20), statsString.PadRight(15), item.Description, item.Cost*0.85);
+                Console.WriteLine("- {0,-3}{1,-3}{2,-20}| {3,-15}| {4,-30}| {5, -10}", i++, equippedString, item.Name.PadRight(20), statsString.PadRight(15), item.Description, (int)(item.Cost*0.85));
             }
 
             /*
@@ -243,6 +238,21 @@ namespace TextGame1
             {
                 Console.WriteLine("\n잘못된 입력입니다.");
                 Console.Write("원하시는 행동을 입력해주세요.\n >> ");
+            }
+
+            if(input == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                int idx = input - 1;
+                character.Gold += (int)(character.Inventory.Items[idx].Cost*0.85);
+                if (character.Inventory.Items[idx].IsEquipped )
+                {
+                    character.UnequipItem(idx);
+                }
+                character.Inventory.Items.RemoveAt(idx);
             }
 
             return input;

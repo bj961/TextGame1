@@ -98,15 +98,16 @@ namespace TextGame1
 
         // itemIdx는 인벤토리의 인덱스
         // 인덱스를 받아 해당 아이템의 장착/해제를 수행하는 메소드
-        public void EquipManagement(int itemIdx)
+        public void EquipManagement(int input)
         {
-            eItemType TypeOfSelectedItem = Inventory.Items[itemIdx - 1].ItemType; //사용자가 선택한 아이템의 타입
+            int itemIdx = input - 1;
+            eItemType TypeOfSelectedItem = Inventory.Items[itemIdx].ItemType; //사용자가 선택한 아이템의 타입
             
             if (equippedItems.ContainsKey(TypeOfSelectedItem)) //사용자가 선택한 장비 슬롯 확인
             {
                 int idxOfEquipedItem = equippedItems[TypeOfSelectedItem]; //장착된 아이템의 인덱스
 
-                if (idxOfEquipedItem != (itemIdx-1))
+                if (idxOfEquipedItem != (itemIdx))
                 {
                     Console.WriteLine($"{TypeOfSelectedItem} 슬롯에는 이미 장착된 아이템이 있습니다.");
                     Console.WriteLine($"장착 중인 아이템 : {Inventory.Items[idxOfEquipedItem].Name}");
@@ -118,7 +119,7 @@ namespace TextGame1
             
 
             //선택한 아이템이 착용 중 이라면
-            if (Inventory.Items[itemIdx - 1].IsEquipped)
+            if (Inventory.Items[itemIdx].IsEquipped)
             {
                 //아이템 해제
                 UnequipItem(itemIdx);
@@ -133,11 +134,11 @@ namespace TextGame1
 
         public void UnequipItem(int itemIdx)
         {
-            eItemType TypeOfSelectedItem = Inventory.Items[itemIdx - 1].ItemType;
+            eItemType TypeOfSelectedItem = Inventory.Items[itemIdx].ItemType;
 
-            Inventory.Items[itemIdx - 1].IsEquipped = false; // 아이템 장착중 플래그 해제
+            Inventory.Items[itemIdx].IsEquipped = false; // 아이템 장착중 플래그 해제
             equippedItems.Remove(TypeOfSelectedItem); // 착용 부위 플래그 해제
-            foreach (var stat in Inventory.Items[itemIdx - 1].EquipStatus) // 능력치 변동 해제
+            foreach (var stat in Inventory.Items[itemIdx].EquipStatus) // 능력치 변동 해제
             {
                 Status[(int)stat.Key] -= stat.Value;
                 equippedItemStat[(int)stat.Key] -= stat.Value;
@@ -146,11 +147,11 @@ namespace TextGame1
 
         public void EquipItem(int itemIdx)
         {
-            eItemType TypeOfSelectedItem = Inventory.Items[itemIdx - 1].ItemType;
+            eItemType TypeOfSelectedItem = Inventory.Items[itemIdx].ItemType;
 
-            Inventory.Items[itemIdx - 1].IsEquipped = true; // 아이템 장착중 플래그 적용
-            equippedItems[TypeOfSelectedItem] = itemIdx - 1; // 착용 부위 플래그 적용
-            foreach (var stat in Inventory.Items[itemIdx - 1].EquipStatus) // 능력치 변동 적용
+            Inventory.Items[itemIdx].IsEquipped = true; // 아이템 장착중 플래그 적용
+            equippedItems[TypeOfSelectedItem] = itemIdx; // 착용 부위 플래그 적용
+            foreach (var stat in Inventory.Items[itemIdx].EquipStatus) // 능력치 변동 적용
             {
                 Status[(int)stat.Key] += stat.Value;
                 equippedItemStat[(int)stat.Key] += stat.Value;
