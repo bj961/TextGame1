@@ -44,7 +44,7 @@ namespace TextGame1
                     //statsString += $"{stat.Key} {stat.Value} ";
                 }
                 string statsString = stringBuilder1.ToString();
-                string costString = item.IsEquipped ? "구매완료" : $"{item.Cost}";
+                string costString = item.IsEquipped ? "구매완료" : $"{item.Cost} G";
 
                 Console.WriteLine("{0,-4} {1,-15} {2,-20} {3,-40} {4, -7}", i++, item.Name, statsString, item.Description, costString);
             }
@@ -202,7 +202,7 @@ namespace TextGame1
                 }
 
 
-                Console.WriteLine("- {0,-3}{1,-3}{2,-20}| {3,-15}| {4,-30}| {5, -10}", i++, equippedString, item.Name.PadRight(20), statsString.PadRight(15), item.Description, (int)(item.Cost*0.85));
+                Console.WriteLine("- {0,-3}{1,-3}{2,-20}| {3,-15}| {4,-30}| {5, -10}G", i++, equippedString, item.Name.PadRight(20), statsString.PadRight(15), item.Description, (int)(item.Cost*0.85));
             }
 
             /*
