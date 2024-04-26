@@ -8,5 +8,7 @@ namespace TextGame1
 {
     internal class Dungeon
     {
+        int difficulty;
+
     }
 }

@@ -18,7 +18,6 @@ namespace TextGame1
         public Shop(string filepath)
         {
             DataManager.LoadItemCSV(filepath, out shop); 
-            //DataManager.LoadItemCSV(filepath, shop);
         }
 
         //isEquipped 이용하여 판매여부 판단 예정. true이면 판매된 상품
@@ -85,8 +84,8 @@ namespace TextGame1
 
             PrintShopItems();
 
-            Console.WriteLine("\n1. 아이템 구매\n2. 아이템 판매\n0. 나가기");
-
+            Console.WriteLine("\n1. 아이템 구매\n2. 아이템 판매\n0. 나가기\n");
+            Console.Write("원하시는 행동을 입력해주세요.\n >> ");
             while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > 3)
             {
                 Console.WriteLine("\n잘못된 입력입니다.");
@@ -206,6 +205,7 @@ namespace TextGame1
             }
 
             /*
+             //출력 포맷 시도한 흔적. 추후 수정하거나 삭제할 예정
             foreach (var item in character.Inventory.Items)
             {
                 StringBuilder itemString = new StringBuilder();
