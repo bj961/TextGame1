@@ -65,7 +65,7 @@ namespace TextGame1
 
             string directoryPath = @"..\..\..\save\";
             string fileName = $"{player.Name} {now.ToString("yyyy-MM-dd HH시mm분ss초")}.dat";
-            string filePath = directoryPath + fileName ;
+            string filePath = directoryPath + fileName;
 
 
             string directoryName = Path.GetDirectoryName(filePath);
@@ -84,16 +84,19 @@ namespace TextGame1
                 formatter.Serialize(stream, data);
             }
 
-            Console.WriteLine($"데이터가 {filePath}에 저장되었습니다.");
+            Console.WriteLine($"데이터가 {fileName}에 저장되었습니다.");
         }
 
-        public static void Load(string filepath, out Character player, out Shop shop)
+        public static void Load(string fileName, out Character player, out Shop shop)
         {
+            string directoryPath = @"..\..\..\save\";
+            string filePath = directoryPath + fileName;
+
             BinaryFormatter formatter = new BinaryFormatter();
 
             List<object> loadedData;
 
-            using (FileStream stream = new FileStream(filepath, FileMode.Open))
+            using (FileStream stream = new FileStream(filePath, FileMode.Open))
             {
                 loadedData = (List<object>)formatter.Deserialize(stream);
             }

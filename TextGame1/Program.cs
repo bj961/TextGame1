@@ -75,7 +75,7 @@ namespace TextGame1
                         //DataManager.Save(player, shop);
                         break;
                     case 7:
-                        //DataManager.Load()
+                        LoadMenu();
                         break;
                 }
             }
@@ -117,13 +117,50 @@ namespace TextGame1
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("로드하기");
             Console.ResetColor();
-            Console.WriteLine($"세이브 데이터를 불러올 수 있습니다.");
+            Console.WriteLine($"세이브 데이터를 불러올 수 있습니다.\n");
 
             //세이브 디렉토리 파일 출력
+            string directoryPath = @"..\..\..\save\";
+            string[] files;
 
 
+            if (Directory.Exists(directoryPath))
+            {
+                files = Directory.GetFiles(directoryPath, "*.dat");
 
-            Console.Write("데이터를 불러오시겠습니까? 1.예  2.아니오\n >> ");
+                if (files.Length == 0)
+                {
+                    //해당 폴더에 .dat 파일 없을 경우
+                    Console.WriteLine("저장된 데이터가 없습니다.");
+                    return;
+                }
+                else
+                {
+                    int i = 1;
+                    Console.WriteLine("번호   파일명");
+                    foreach (string file in files)
+                    {
+                        Console.WriteLine($"{i++} : {file}");
+                    }
+                }
+            }
+            else
+            {
+                //save 폴더가 존재하지 않음 == 데이터를 저장한 적 없음. 데이터 저장 시 폴더 만들고 저장함
+                Console.WriteLine("저장 데이터 폴더가 없습니다.");
+                return;
+            }
+
+            Console.Write("불러올 데이터의 번호를 입력해주세요. \n >> ");
+            while (int.TryParse(Console.ReadLine(), out input) == false || input < 1 || input > files.Length)
+            {
+                Console.WriteLine("\n잘못된 입력입니다.");
+                Console.Write(" >> ");
+            }
+            int idx = input - 1;
+
+            Console.WriteLine($"{files[idx]}");
+            Console.Write("이 데이터를 불러오시겠습니까? 1.예  2.아니오\n >> ");
             while (int.TryParse(Console.ReadLine(), out input) == false || input < 1 || input > 2)
             {
                 Console.WriteLine("\n잘못된 입력입니다.");
@@ -132,7 +169,7 @@ namespace TextGame1
             switch (input)
             {
                 case 1:
-                    //DataManager.Load();
+                    DataManager.Load(files[idx], out player, out shop);
                     Console.WriteLine("\n계속하려면 엔터를 누르세요.");
                     Console.ReadLine();
                     break;
