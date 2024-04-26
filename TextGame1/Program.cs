@@ -108,6 +108,7 @@ namespace TextGame1
             Console.WriteLine("[아이템 목록]");
 
             character.Inventory.PrintItems();
+
             Console.WriteLine("\n1. 장착 관리\n0. 나가기");
             //Console.WriteLine("\n1. 장착 관리\n2. 아이템 버리기\n0. 나가기");
 
@@ -122,7 +123,7 @@ namespace TextGame1
                 case 0:
                     break;
                 case 1:
-                    while (EquipManagement(character, 0) != 0) {; }
+                    while (EquipManagementMenu(character, 0) != 0) {; }
                     break;
                 case 2:
                     //while (InventoryManagementMenu(character, 1) != 0) {; }
@@ -132,7 +133,7 @@ namespace TextGame1
             return input;
         }
 
-        static int EquipManagement(Character character, int mode)
+        static int EquipManagementMenu(Character character, int mode)
         {
             int input;
             string modeString = "";
@@ -171,7 +172,7 @@ namespace TextGame1
                 case 0:
                     if (input > 0 && input <= character.Inventory.Items.Count)
                     {
-                        character.ItemEquipManagement(input);
+                        character.EquipManagement(input);
                     }
                     break;
                 case 1:

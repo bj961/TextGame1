@@ -19,7 +19,7 @@ namespace TextGame1
         //아이템 추가
         public void AddItem(Item item)
         {
-            Items.Add(item);
+            Items.Add(new Item(item));
         }
 
         //idx 입력받아 해당 아이템 제거

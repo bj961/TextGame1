@@ -72,7 +72,17 @@ namespace TextGame1
         {
             int input;
 
-            PrintShopUI(character);
+            //PrintShopUI(character);
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("상점");
+            Console.ResetColor();
+            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다..\n");
+
+            Console.WriteLine("보유 골드");
+            Console.WriteLine($"{character.Gold} G\n");
+            Console.WriteLine("[아이템 목록]");
+
             PrintShopItems();
 
             Console.WriteLine("\n1. 아이템 구매\n2. 아이템 판매\n0. 나가기");
@@ -86,10 +96,10 @@ namespace TextGame1
             switch (input)
             {
                 case 1:
-                    //BuyItem(character)
+                    while(BuyItemMenu(character) != 0) {;}
                     break;
                 case 2:
-                    //SellItem(character)
+                    while( SellItemMenu(character) != 0 ) {;}
                     break;
             }
 
@@ -97,25 +107,145 @@ namespace TextGame1
         }
 
 
-        public void BuyItem(Character character)
+        public int BuyItemMenu(Character character)
         {
             int input;
 
-            PrintShopUI(character);
+            //PrintShopUI(character);
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("상점 - 아이템 구매");
+            Console.ResetColor();
+            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다..\n");
+
+            Console.WriteLine("보유 골드");
+            Console.WriteLine($"{character.Gold} G\n");
+            Console.WriteLine("[아이템 목록]");
+
+
             PrintShopItems();
 
-            Console.WriteLine($"\n1~{character.Inventory.Items.Count}. 아이템 " + modeString + "\n0. 나가기");
-            while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > character.Inventory.Items.Count)
+            Console.WriteLine($"\n1~{shop.Count}. 아이템 구매\n0. 나가기\n");
+            Console.Write("원하시는 행동을 입력해주세요.\n >> ");
+            while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > shop.Count)
             {
                 Console.WriteLine("\n잘못된 입력입니다.");
                 Console.Write("원하시는 행동을 입력해주세요.\n >> ");
             }
 
+            if(input == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                int idx = input - 1;
+                //BuyItem(character, input);
+                if(shop[idx].IsEquipped == true)
+                {
+                    Console.WriteLine("이미 구매한 아이템입니다.");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    if(character.Gold >= shop[idx].Cost)
+                    {
+                        character.Gold -= shop[idx].Cost;
+                        character.Inventory.AddItem(shop[idx]);
+                        shop[idx].IsEquipped = true;
+                        Console.WriteLine("구매를 완료했습니다.");
+                        Console.ReadLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Gold가 부족합니다.");
+                        Console.ReadLine();
+                    }
+                    
+                }
+                
+                return input;
+            }
+
+
         }
 
-        public void SellItem()
+        void BuyItem(Character character, int itemIdx)
         {
 
+        }
+
+
+        public int SellItemMenu(Character character)
+        {
+            int input=1;
+
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("상점 - 아이템 판매");
+            Console.ResetColor();
+            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다..\n");
+
+            Console.WriteLine("보유 골드");
+            Console.WriteLine($"{character.Gold} G\n");
+            Console.WriteLine("[아이템 목록]");
+
+            //character.Inventory.PrintItems();
+            // 헤더 출력
+            Console.WriteLine("{0,-6}  {1,-20}  {2,-15} {3,-30} {4,-7}", " No.", "이름", "스탯", "설명", "판매가격");
+            Console.WriteLine(new string('-', 80));
+
+            // 아이템 출력. 출력 포맷은 나중에 수정 후 다른 포맷들과 통일할 예정
+            int i = 1;
+            foreach (var item in character.Inventory.Items)
+            {
+                string equippedString = item.IsEquipped ? "[E]" : " ";
+                string statsString = "";
+                foreach (var stat in item.EquipStatus)
+                {
+                    statsString += $"{stat.Key} {stat.Value} ";
+                }
+
+
+                Console.WriteLine("- {0,-3}{1,-3}{2,-20}| {3,-15}| {4,-30}| {5, -10}", i++, equippedString, item.Name.PadRight(20), statsString.PadRight(15), item.Description, item.Cost*0.85);
+            }
+
+            /*
+            foreach (var item in character.Inventory.Items)
+            {
+                StringBuilder itemString = new StringBuilder();
+                itemString.Append($"- {i++} ");
+                itemString.Append(item.IsEquipped ? "[E]" : "  ");
+                itemString.Append($"{item.Name}\t");
+                if(item.Name.Length > 5)
+                {
+                    itemString.Append("\t");
+                }
+                
+                StringBuilder statString = new StringBuilder("| ");
+                int count = 0;
+                foreach (var stat in item.EquipStatus)
+                {
+                    statString.Append($"{stat.Key} {stat.Value} ");
+                    count++;
+                }
+                itemString.Append(statString.ToString().PadRight(20));
+                itemString.Append($"\t| {item.Description}\t| {item.Cost * 0.85}");
+
+                Console.WriteLine(itemString.ToString());
+            }
+            */
+
+
+            Console.WriteLine($"\n1~{shop.Count}. 아이템 판매\n0. 나가기\n");
+            Console.Write("원하시는 행동을 입력해주세요.\n >> ");
+            while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > shop.Count)
+            {
+                Console.WriteLine("\n잘못된 입력입니다.");
+                Console.Write("원하시는 행동을 입력해주세요.\n >> ");
+            }
+
+            return input;
         }
 
     }

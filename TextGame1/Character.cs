@@ -98,7 +98,7 @@ namespace TextGame1
 
         // itemIdx는 인벤토리의 인덱스
         // 인덱스를 받아 해당 아이템의 장착/해제를 수행하는 메소드
-        public void ItemEquipManagement(int itemIdx)
+        public void EquipManagement(int itemIdx)
         {
             eItemType TypeOfSelectedItem = Inventory.Items[itemIdx - 1].ItemType; //사용자가 선택한 아이템의 타입
             
