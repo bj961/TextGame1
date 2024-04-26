@@ -7,28 +7,59 @@ namespace TextGame1
         static Character player;
         static Shop shop;
 
+        static int StartMenu()
+        {
+            int input;
+            string filepath;
+            int isLoadSuccess;
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("\n스 파 르 타 던 전\n");
+            Console.ResetColor();
+            Console.WriteLine("[0] 새 게임");
+            Console.WriteLine("[1] 불러오기");
+            Console.Write(" >> ");
+
+            while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > 1)
+            {
+                Console.WriteLine("\n잘못된 입력입니다.");
+                Console.Write(" >> ");
+            }
+
+            switch (input)
+            {
+                case 0:
+                    //상점 초기화
+                    filepath = @"..\..\..\ShopItems.csv";
+                    shop = new Shop(filepath);
+                    Console.Write("플레이어 이름을 입력하세요: ");
+                    player = new Character(Console.ReadLine());
+
+                    // 테스트용 초기 아이템. 추후 CSV 파일 활용해 읽어올 예정
+                    player.Inventory.AddItem(new Item(0, "무쇠갑옷", 1000, eItemType.Chest, new Dictionary<eStatus, float> { { eStatus.DEF, 5 } }, "무쇠로 만들어져 튼튼한 갑옷입니다."));
+                    player.Inventory.AddItem(new Item(1, "스파르타의 창", 1500, eItemType.Weapon, new Dictionary<eStatus, float> { { eStatus.ATK, 7 } }, "스파르타의 전사들이 사용했다는 전설의 창입니다."));
+                    player.Inventory.AddItem(new Item(2, "낡은 나무 방패", 500, eItemType.Shield, new Dictionary<eStatus, float> { { eStatus.DEF, 2 } }, "쉽게 볼 수 있는 낡은 방패 입니다."));
+                    player.Inventory.AddItem(new Item(3, "낡은 검", 500, eItemType.Weapon, new Dictionary<eStatus, float> { { eStatus.ATK, 2 } }, "쉽게 볼 수 있는 낡은 검 입니다."));
+                    player.Inventory.AddItem(new Item(4, "광전사의 목걸이", 1500, eItemType.Amulet, new Dictionary<eStatus, float> { { eStatus.ATK, 7 }, { eStatus.DEF, -3 } }, "공격성을 증폭시키는 광전사의 목걸이입니다."));
+
+                    return 1;
+
+                case 1:
+                    isLoadSuccess = LoadMenu();
+                    //while((isLoadSuccess = LoadMenu()) != 1){}
+                    return isLoadSuccess;
+                default:
+                    return 0;
+            }
+
+        }
+
         static void Main(string[] args)
         {
             bool isPlaying = true;
             int input;
 
-            //상점 초기화
-            string filepath = @"..\..\..\ShopItems.csv";
-            //Shop shop = new Shop(filepath);
-            shop = new Shop(filepath);
-
-            Console.Write("플레이어 이름을 입력하세요: ");
-            //Character player = new Character(Console.ReadLine());
-            player = new Character(Console.ReadLine());
-
-
-            // 테스트용 초기 아이템. 추후 CSV 파일 활용해 읽어올 예정
-            player.Inventory.AddItem(new Item(0, "무쇠갑옷", 1000, eItemType.Chest, new Dictionary<eStatus, float> { { eStatus.DEF, 5 } }, "무쇠로 만들어져 튼튼한 갑옷입니다."));
-            player.Inventory.AddItem(new Item(1, "스파르타의 창", 1500, eItemType.Weapon, new Dictionary<eStatus, float> { { eStatus.ATK, 7 } }, "스파르타의 전사들이 사용했다는 전설의 창입니다."));
-            player.Inventory.AddItem(new Item(2, "낡은 나무 방패", 500, eItemType.Shield, new Dictionary<eStatus, float> { { eStatus.DEF, 2 } }, "쉽게 볼 수 있는 낡은 방패 입니다."));
-            player.Inventory.AddItem(new Item(3, "낡은 검", 500, eItemType.Weapon, new Dictionary<eStatus, float> { { eStatus.ATK, 2 } }, "쉽게 볼 수 있는 낡은 검 입니다."));
-            player.Inventory.AddItem(new Item(4, "광전사의 목걸이", 1500, eItemType.Amulet, new Dictionary<eStatus, float> { { eStatus.ATK, 7 }, { eStatus.DEF, -3 } }, "공격성을 증폭시키는 광전사의 목걸이입니다."));
-
+            while (StartMenu() != 1){}
 
             //메인 메뉴
             while (isPlaying)
@@ -72,10 +103,9 @@ namespace TextGame1
                         break;
                     case 6:
                         SaveMenu();
-                        //DataManager.Save(player, shop);
                         break;
                     case 7:
-                        LoadMenu();
+                        while (LoadMenu()!=1) { }
                         break;
                 }
             }
@@ -109,15 +139,13 @@ namespace TextGame1
             }
         }
 
-        public static void LoadMenu()
+        public static int LoadMenu()
         {
+            //로드 성공 시 1, 로드 실패 시 -1, 플레이어가 나가기 실행 시 0 리턴
             int input;
 
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("로드하기");
-            Console.ResetColor();
-            Console.WriteLine($"세이브 데이터를 불러올 수 있습니다.\n");
+            
 
             //세이브 디렉토리 파일 출력
             string directoryPath = @"..\..\..\save\";
@@ -132,31 +160,46 @@ namespace TextGame1
                 {
                     //해당 폴더에 .dat 파일 없을 경우
                     Console.WriteLine("저장된 데이터가 없습니다.");
-                    return;
+                    Console.WriteLine("\n계속하려면 엔터를 누르세요.");
+                    return -1;
                 }
                 else
                 {
+                    //메뉴 출력
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine("로드하기");
+                    Console.ResetColor();
+                    Console.WriteLine($"세이브 데이터를 불러올 수 있습니다.\n");
+
                     int i = 1;
                     Console.WriteLine("번호   파일명");
                     foreach (string file in files)
                     {
                         Console.WriteLine($"{i++} : {file}");
                     }
+                    Console.WriteLine("0 : 나가기");
                 }
             }
             else
             {
                 //save 폴더가 존재하지 않음 == 데이터를 저장한 적 없음. 데이터 저장 시 폴더 만들고 저장함
-                Console.WriteLine("저장 데이터 폴더가 없습니다.");
-                return;
+                Console.WriteLine("저장된 데이터가 없습니다.");
+                Console.WriteLine("\n계속하려면 엔터를 누르세요.");
+                return -1;
             }
 
             Console.Write("불러올 데이터의 번호를 입력해주세요. \n >> ");
-            while (int.TryParse(Console.ReadLine(), out input) == false || input < 1 || input > files.Length)
+            while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > files.Length)
             {
                 Console.WriteLine("\n잘못된 입력입니다.");
                 Console.Write(" >> ");
             }
+
+            if(input == 0)
+            {
+                return 0;
+            }
+
             int idx = input - 1;
 
             Console.WriteLine($"{files[idx]}");
@@ -170,12 +213,15 @@ namespace TextGame1
             {
                 case 1:
                     DataManager.Load(files[idx], out player, out shop);
+                    Console.WriteLine("불러오기에 성공했습니다!");
                     Console.WriteLine("\n계속하려면 엔터를 누르세요.");
                     Console.ReadLine();
-                    break;
+                    return 1;
                 case 2:
                     break;
             }
+
+            return 0;
         }
 
 
