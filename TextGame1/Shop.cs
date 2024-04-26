@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextGame1
 {
+    [Serializable]
     internal class Shop
     {
         public List<Item> shop;

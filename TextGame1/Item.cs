@@ -23,6 +23,7 @@ namespace TextGame1
         All = int.MaxValue
     }
 
+    [Serializable]
     public class Item
     {
         public int ID { get; set; }

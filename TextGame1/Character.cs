@@ -15,21 +15,8 @@ namespace TextGame1
         DEF
     }
 
-    public enum eCharacterClass1
-    {
-        Warrior,
-        Ranger,
-        Wizard,
-        Rogue
-    }
 
-    public struct EquippedItem
-    {
-        public int itemID;
-        public int itemType;
-        public int[] itemStat;
-    }
-
+    [Serializable]
     internal class Character
     {
         public string Name { get; set; }
@@ -292,6 +279,8 @@ namespace TextGame1
             {
                 Exp -= Level;
                 Level++;
+                Status[(int)eStatus.ATK] += 0.5f;
+                Status[(int)eStatus.DEF] += 1f;
             }
 
             return res;

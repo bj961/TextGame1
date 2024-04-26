@@ -4,6 +4,9 @@ namespace TextGame1
 {
     internal class Program
     {
+        static Character player;
+        static Shop shop;
+
         static void Main(string[] args)
         {
             bool isPlaying = true;
@@ -11,10 +14,12 @@ namespace TextGame1
 
             //상점 초기화
             string filepath = @"..\..\..\ShopItems.csv";
-            Shop shop = new Shop(filepath);
+            //Shop shop = new Shop(filepath);
+            shop = new Shop(filepath);
 
             Console.Write("플레이어 이름을 입력하세요: ");
-            Character player = new Character(Console.ReadLine());
+            //Character player = new Character(Console.ReadLine());
+            player = new Character(Console.ReadLine());
 
 
             // 테스트용 초기 아이템. 추후 CSV 파일 활용해 읽어올 예정
@@ -69,7 +74,27 @@ namespace TextGame1
             }
         }
 
-        
+        public static void SaveMenu(Character character)
+        {
+            int input;
+
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("저장하기");
+            Console.ResetColor();
+            Console.WriteLine($"현재 데이터를 저장할 수 있습니다.");
+
+            Console.WriteLine("1. 휴식하기\n0. 나가기\n");
+            Console.Write("원하시는 행동을 입력해주세요.\n >> ");
+            while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > 2)
+            {
+                Console.WriteLine("\n잘못된 입력입니다.");
+                Console.Write("원하시는 행동을 입력해주세요.\n >> ");
+            }
+        }
+
+
+
         static int Rest(Character character)
         {
             int input;

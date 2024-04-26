@@ -7,6 +7,7 @@ using System.Xml.Linq;
 
 namespace TextGame1
 {
+    [Serializable]
     internal class Inventory
     {
         public List<Item> Items { get; set; }
