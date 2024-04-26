@@ -89,14 +89,14 @@ namespace TextGame1
 
         public static void Load(string fileName, out Character player, out Shop shop)
         {
-            string directoryPath = @"..\..\..\save\";
-            string filePath = directoryPath + fileName;
+            //string directoryPath = @"..\..\..\save\";
+            //string filePath = directoryPath + fileName;
 
             BinaryFormatter formatter = new BinaryFormatter();
 
             List<object> loadedData;
 
-            using (FileStream stream = new FileStream(filePath, FileMode.Open))
+            using (FileStream stream = new FileStream(fileName, FileMode.Open))
             {
                 loadedData = (List<object>)formatter.Deserialize(stream);
             }
