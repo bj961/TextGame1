@@ -40,10 +40,10 @@ namespace TextGame1
                 Console.ResetColor();
                 Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
                 Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.\n");
-                Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전 입장\n5. 휴식하기\n\n0. 게임 종료\n");
+                Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전 입장\n5. 휴식하기\n6. 세이브\n7. 로드\n\n0. 게임 종료\n");
                 
                 Console.Write("원하시는 행동을 입력해주세요.\n >> ");
-                while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > 5)
+                while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > 7)
                 {
                     Console.WriteLine("\n잘못된 입력입니다.");
                     Console.Write("원하시는 행동을 입력해주세요.\n >> ");
@@ -70,11 +70,18 @@ namespace TextGame1
                     case 5:
                         while(Rest(player) != 0) { }
                         break;
+                    case 6:
+                        SaveMenu();
+                        //DataManager.Save(player, shop);
+                        break;
+                    case 7:
+                        //DataManager.Load()
+                        break;
                 }
             }
         }
 
-        public static void SaveMenu(Character character)
+        public static void SaveMenu()
         {
             int input;
 
@@ -84,12 +91,53 @@ namespace TextGame1
             Console.ResetColor();
             Console.WriteLine($"현재 데이터를 저장할 수 있습니다.");
 
-            Console.WriteLine("1. 휴식하기\n0. 나가기\n");
-            Console.Write("원하시는 행동을 입력해주세요.\n >> ");
-            while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > 2)
+            Console.Write("데이터를 저장하시겠습니까? 1.예  2.아니오\n >> ");
+            while (int.TryParse(Console.ReadLine(), out input) == false || input < 1 || input > 2)
             {
                 Console.WriteLine("\n잘못된 입력입니다.");
-                Console.Write("원하시는 행동을 입력해주세요.\n >> ");
+                Console.Write("데이터 저장 1.예  2.아니오\n >> ");
+            }
+            switch (input)
+            {
+                case 1:
+                    DataManager.Save(player, shop);
+                    Console.WriteLine("\n계속하려면 엔터를 누르세요.");
+                    Console.ReadLine();
+                    break;
+                case 2:
+                    break;
+            }
+        }
+
+        public static void LoadMenu()
+        {
+            int input;
+
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("로드하기");
+            Console.ResetColor();
+            Console.WriteLine($"세이브 데이터를 불러올 수 있습니다.");
+
+            //세이브 디렉토리 파일 출력
+
+
+
+            Console.Write("데이터를 불러오시겠습니까? 1.예  2.아니오\n >> ");
+            while (int.TryParse(Console.ReadLine(), out input) == false || input < 1 || input > 2)
+            {
+                Console.WriteLine("\n잘못된 입력입니다.");
+                Console.Write("데이터 저장 1.예  2.아니오\n >> ");
+            }
+            switch (input)
+            {
+                case 1:
+                    //DataManager.Load();
+                    Console.WriteLine("\n계속하려면 엔터를 누르세요.");
+                    Console.ReadLine();
+                    break;
+                case 2:
+                    break;
             }
         }
 
@@ -137,6 +185,7 @@ namespace TextGame1
                             Console.WriteLine("휴식을 완료했습니다.");
                         }     
                     }
+                    Console.WriteLine("\n계속하려면 엔터를 누르세요.");
                     Console.ReadLine();
                     break;
             }

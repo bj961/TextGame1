@@ -144,6 +144,7 @@ namespace TextGame1
                 if(shop[idx].IsEquipped == true)
                 {
                     Console.WriteLine("이미 구매한 아이템입니다.");
+                    Console.WriteLine("\n계속하려면 엔터를 누르세요.");
                     Console.ReadLine();
                 }
                 else
@@ -154,11 +155,13 @@ namespace TextGame1
                         character.Inventory.AddItem(shop[idx]);
                         shop[idx].IsEquipped = true;
                         Console.WriteLine("구매를 완료했습니다.");
+                        Console.WriteLine("\n계속하려면 엔터를 누르세요.");
                         Console.ReadLine();
                     }
                     else
                     {
                         Console.WriteLine("Gold가 부족합니다.");
+                        Console.WriteLine("\n계속하려면 엔터를 누르세요.");
                         Console.ReadLine();
                     }
                     

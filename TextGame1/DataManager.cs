@@ -62,10 +62,19 @@ namespace TextGame1
             BinaryFormatter formatter = new BinaryFormatter();
 
             DateTime now = DateTime.Now;
-            StringBuilder filePath = new StringBuilder(@"..\..\..\save\ShopItems.csv");
-            filePath.Append($"{player.Name}_LV{player.Level}_{now.ToString("yyyy-MM-dd HH:mm:ss")}");
-            
-            using (FileStream stream = new FileStream(filePath.ToString(), FileMode.Create))
+
+            string directoryPath = @"..\..\..\save\";
+            string fileName = $"{player.Name} {now.ToString("yyyy-MM-dd HH시mm분ss초")}.dat";
+            string filePath = directoryPath + fileName ;
+
+
+            string directoryName = Path.GetDirectoryName(filePath);
+            if(!Directory.Exists(directoryName))
+            {
+                Directory.CreateDirectory(directoryName);
+            }
+
+            using (FileStream stream = new FileStream(filePath, FileMode.Create))
             {
                 List<object> data = new List<object>();
 
@@ -74,6 +83,8 @@ namespace TextGame1
 
                 formatter.Serialize(stream, data);
             }
+
+            Console.WriteLine($"데이터가 {filePath}에 저장되었습니다.");
         }
 
         public static void Load(string filepath, out Character player, out Shop shop)

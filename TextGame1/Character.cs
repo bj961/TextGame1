@@ -223,6 +223,7 @@ namespace TextGame1
                 {
                     Console.WriteLine($"{TypeOfSelectedItem} 슬롯에는 이미 장착된 아이템이 있습니다.");
                     Console.WriteLine($"장착 중인 아이템 : {Inventory.Items[idxOfEquipedItem].Name}");
+                    Console.WriteLine("\n계속하려면 엔터를 누르세요.");
                     Console.ReadLine();
                     return;
                 }

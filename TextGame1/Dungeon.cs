@@ -47,6 +47,7 @@ namespace TextGame1
                 if (character.Status[(int)eStatus.HP] <= 0)
                 {
                     Console.WriteLine("HP가 없어서 던전에 입장할 수 없습니다");
+                    Console.WriteLine("\n계속하려면 엔터를 누르세요.");
                     Console.ReadLine();
                     return input;
                 }
