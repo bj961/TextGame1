@@ -201,7 +201,7 @@ namespace TextGame1
                 }
 
 
-                Console.WriteLine("- {0,-3}{1,-3}{2,-20}| {3,-15}| {4,-30}| {5, -10}G", i++, equippedString, item.Name.PadRight(20), statsString.PadRight(15), item.Description, (int)(item.Cost*0.85));
+                Console.WriteLine("- {0,-3}{1,-3}{2,-20}| {3,-15}| {4,-30}| {5, -10}G", i++, equippedString, item.Name, statsString, item.Description, (int)(item.Cost*0.85));
             }
 
             /*

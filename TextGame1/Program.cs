@@ -4,17 +4,6 @@ namespace TextGame1
 {
     internal class Program
     {
-
-        private enum menuState
-        {
-            mainMenu,
-            statusMenu,
-            inventoryMenu,
-            equipMenu
-        }
-
-        
-
         static void Main(string[] args)
         {
             bool isPlaying = true;
@@ -41,9 +30,12 @@ namespace TextGame1
             {
 
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("메인메뉴");
+                Console.ResetColor();
                 Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다.");
-                Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
-                Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전 입장(미구현)\n5. 휴식하기\n\n0. 게임 종료\n");
+                Console.WriteLine("이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.\n");
+                Console.WriteLine("1. 상태 보기\n2. 인벤토리\n3. 상점\n4. 던전 입장\n5. 휴식하기\n\n0. 게임 종료\n");
                 
                 Console.Write("원하시는 행동을 입력해주세요.\n >> ");
                 while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > 5)
@@ -59,16 +51,16 @@ namespace TextGame1
                         isPlaying = false;
                         break;
                     case 1:
-                        StatusMenu(player);
+                        player.StatusMenu();
                         break;
                     case 2:
-                        while (InventoryMenu(player) != 0) { }
+                        while (player.InventoryMenu() != 0) { }
                         break;
                     case 3:
                         while (shop.ShopMenu(player) != 0) { }
                         break;
                     case 4:
-                        //던전
+                        while (Dungeon.DungeonMenu(player) != 0) { }
                         break;
                     case 5:
                         while(Rest(player) != 0) { }
@@ -77,125 +69,7 @@ namespace TextGame1
             }
         }
 
-        static void StatusMenu(Character character)
-        {
-            character.ViewStatus();
-
-            Console.WriteLine("\n0. 나가기");
-            Console.Write("원하시는 행동을 입력해주세요.\n >> ");
-
-            int input;
-            while (int.TryParse(Console.ReadLine(), out input) == false || input != 0)
-            {
-                Console.WriteLine("\n잘못된 입력입니다.");
-                Console.Write("원하시는 행동을 입력해주세요.\n >> ");
-            }
-
-            switch (input)
-            {
-                case 0:
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        static int InventoryMenu(Character character)
-        {
-            int input;
-
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("인벤토리");
-            Console.ResetColor();
-            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.\n");
-
-            Console.WriteLine("[아이템 목록]");
-
-            character.Inventory.PrintItems();
-
-            Console.WriteLine("\n1. 장착 관리\n0. 나가기\n");
-            //Console.WriteLine("\n1. 장착 관리\n2. 아이템 버리기\n0. 나가기");
-            Console.Write("원하시는 행동을 입력해주세요.\n >> ");
-            while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > 2)
-            {
-                Console.WriteLine("\n잘못된 입력입니다.");
-                Console.Write("원하시는 행동을 입력해주세요.\n >> ");
-            }
-
-            switch (input)
-            {
-                case 0:
-                    break;
-                case 1:
-                    while (EquipManagementMenu(character, 0) != 0) {; }
-                    break;
-                case 2:
-                    //while (InventoryManagementMenu(character, 1) != 0) {; }
-                    break;
-            }
-
-            return input;
-        }
-
-        static int EquipManagementMenu(Character character, int mode)
-        {
-            int input;
-            string modeString = "";
-
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            switch (mode)
-            {
-                case 0:
-                    Console.WriteLine("인벤토리 - 장착 관리");
-                    Console.ResetColor();
-                    Console.WriteLine("보유 중인 아이템을 장착/해제할 수 있습니다.\n");
-                    modeString += "장착/해제";
-                    break;
-                    /*
-                case 1:
-                    Console.WriteLine("인벤토리 - 아이템 버리기");
-                    Console.ResetColor();
-                    Console.WriteLine("보유 중인 아이템을 버릴 수 있습니다.\n");
-                    modeString += "버리기";
-                    break;
-                    */
-            }
-            Console.WriteLine("[아이템 목록]");
-            character.Inventory.PrintItems();
-
-            Console.WriteLine($"\n1~{character.Inventory.Items.Count}. 아이템 " + modeString + "\n0. 나가기");
-            while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > character.Inventory.Items.Count)
-            {
-                Console.WriteLine("\n잘못된 입력입니다.");
-                Console.Write("원하시는 행동을 입력해주세요.\n >> ");
-            }
-
-            switch (mode)
-            {
-                case 0:
-                    if (input > 0 && input <= character.Inventory.Items.Count)
-                    {
-                        character.EquipManagement(input);
-                    }
-                    break;
-                case 1:
-                    if (input > 0 && input <= character.Inventory.Items.Count)
-                    {
-                        if (character.Inventory.Items[input - 1].IsEquipped)
-                        {
-                            //아이템 해제
-                            character.UnequipItem(input);
-                        }
-                        character.Inventory.DeleteItem(input);
-                    }
-                    break;
-            }
-            
-            return input;
-        }
-
+        
         static int Rest(Character character)
         {
             int input;
@@ -227,11 +101,18 @@ namespace TextGame1
                     }
                     else
                     {
-                        character.Gold -= 500;
-                        character.Status[(int)eStatus.HP] = 100;
-                        Console.WriteLine("휴식을 완료했습니다.");
-                        Console.ReadLine();
+                        if(character.Status[(int)eStatus.HP] == 100)
+                        {
+                            Console.WriteLine("이미 최대 체력입니다.");
+                        }
+                        else
+                        {
+                            character.Gold -= 500;
+                            character.Status[(int)eStatus.HP] = 100;
+                            Console.WriteLine("휴식을 완료했습니다.");
+                        }     
                     }
+                    Console.ReadLine();
                     break;
             }
 

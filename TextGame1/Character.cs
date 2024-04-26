@@ -63,6 +63,32 @@ namespace TextGame1
             Console.WriteLine($"{Enum.GetNames(typeof(eStatus)).Length}");//tmp
         }
 
+        //상태창 메뉴
+        public void StatusMenu()
+        {
+            ViewStatus();
+
+            Console.WriteLine("\n0. 나가기");
+            Console.Write("원하시는 행동을 입력해주세요.\n >> ");
+
+            int input;
+            while (int.TryParse(Console.ReadLine(), out input) == false || input != 0)
+            {
+                Console.WriteLine("\n잘못된 입력입니다.");
+                Console.Write("원하시는 행동을 입력해주세요.\n >> ");
+            }
+
+            switch (input)
+            {
+                case 0:
+                    return;
+                default:
+                    break;
+            }
+        }
+
+
+
         //캐릭터의 능력치를 출력하는 메소드
         public void ViewStatus()
         {
@@ -95,6 +121,105 @@ namespace TextGame1
             Console.WriteLine($"체  력 : {Status[(int)eStatus.HP]} " + equippedItemStatString[(int)eStatus.HP]);
             Console.WriteLine($"GOLD : {Gold} G");
         }
+
+
+
+        public int InventoryMenu()
+        {
+            int input;
+
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("인벤토리");
+            Console.ResetColor();
+            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.\n");
+
+            Console.WriteLine("[아이템 목록]");
+
+            Inventory.PrintItems();
+
+            Console.WriteLine("\n1. 장착 관리\n0. 나가기\n");
+            //Console.WriteLine("\n1. 장착 관리\n2. 아이템 버리기\n0. 나가기");
+            Console.Write("원하시는 행동을 입력해주세요.\n >> ");
+            while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > 2)
+            {
+                Console.WriteLine("\n잘못된 입력입니다.");
+                Console.Write("원하시는 행동을 입력해주세요.\n >> ");
+            }
+
+            switch (input)
+            {
+                case 0:
+                    break;
+                case 1:
+                    while (EquipManagementMenu(0) != 0) {; }
+                    break;
+                case 2:
+                    //while (EquipManagementMenu(1) != 0) {; }
+                    break;
+            }
+
+            return input;
+        }
+
+        public int EquipManagementMenu(int mode)
+        {
+            int input;
+            string modeString = "";
+
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            switch (mode)
+            {
+                case 0:
+                    Console.WriteLine("인벤토리 - 장착 관리");
+                    Console.ResetColor();
+                    Console.WriteLine("보유 중인 아이템을 장착/해제할 수 있습니다.\n");
+                    modeString += "장착/해제";
+                    break;
+                    /*
+                case 1:
+                    Console.WriteLine("인벤토리 - 아이템 버리기");
+                    Console.ResetColor();
+                    Console.WriteLine("보유 중인 아이템을 버릴 수 있습니다.\n");
+                    modeString += "버리기";
+                    break;
+                    */
+            }
+            Console.WriteLine("[아이템 목록]");
+            this.Inventory.PrintItems();
+
+            Console.WriteLine($"\n1~{Inventory.Items.Count}. 아이템 " + modeString + "\n0. 나가기");
+            while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > Inventory.Items.Count)
+            {
+                Console.WriteLine("\n잘못된 입력입니다.");
+                Console.Write("원하시는 행동을 입력해주세요.\n >> ");
+            }
+
+            switch (mode)
+            {
+                case 0:
+                    if (input > 0 && input <= Inventory.Items.Count)
+                    {
+                        EquipManagement(input);
+                    }
+                    break;
+                case 1:
+                    if (input > 0 && input <= Inventory.Items.Count)
+                    {
+                        if (Inventory.Items[input - 1].IsEquipped)
+                        {
+                            //아이템 해제
+                            UnequipItem(input);
+                        }
+                        Inventory.DeleteItem(input);
+                    }
+                    break;
+            }
+
+            return input;
+        }
+
 
         // itemIdx는 인벤토리의 인덱스
         // 인덱스를 받아 해당 아이템의 장착/해제를 수행하는 메소드
