@@ -283,5 +283,19 @@ namespace TextGame1
             }
         }
 
+        public bool CheckLevelUp()
+        {
+            bool res = false;
+            if(Exp >= Level) { res = true; }
+                
+            while(Exp >= Level)
+            {
+                Exp -= Level;
+                Level++;
+            }
+
+            return res;
+        }
+
     }
 }

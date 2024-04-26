@@ -109,6 +109,12 @@ namespace TextGame1
             character.Gold += reward;
             Console.WriteLine($"{character.Gold} G");
 
+            character.Exp++;
+            if (character.CheckLevelUp())
+            {
+                Console.WriteLine($"레벨 업! Lv.{character.Level} 이 되었습니다.");
+            }
+
             Console.WriteLine("\n0. 나가기\n");
 
             Console.Write("원하시는 행동을 입력해주세요.\n >> ");
