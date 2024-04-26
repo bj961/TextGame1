@@ -55,20 +55,24 @@ namespace TextGame1
 
         }
 
-        public int ShopMenu(Character character)
+        private void PrintShopUI(Character character)
         {
-            int input;
-
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("상점");
             Console.ResetColor();
-            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.\n");
+            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다..\n");
 
             Console.WriteLine("보유 골드");
             Console.WriteLine($"{character.Gold} G\n");
             Console.WriteLine("[아이템 목록]");
+        }
 
+        public int ShopMenu(Character character)
+        {
+            int input;
+
+            PrintShopUI(character);
             PrintShopItems();
 
             Console.WriteLine("\n1. 아이템 구매\n2. 아이템 판매\n0. 나가기");
@@ -82,10 +86,10 @@ namespace TextGame1
             switch (input)
             {
                 case 1:
-                    //shop.BuyItem(character)
+                    //BuyItem(character)
                     break;
                 case 2:
-                    //shop.SellItem(character)
+                    //SellItem(character)
                     break;
             }
 
@@ -95,6 +99,17 @@ namespace TextGame1
 
         public void BuyItem(Character character)
         {
+            int input;
+
+            PrintShopUI(character);
+            PrintShopItems();
+
+            Console.WriteLine($"\n1~{character.Inventory.Items.Count}. 아이템 " + modeString + "\n0. 나가기");
+            while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > character.Inventory.Items.Count)
+            {
+                Console.WriteLine("\n잘못된 입력입니다.");
+                Console.Write("원하시는 행동을 입력해주세요.\n >> ");
+            }
 
         }
 

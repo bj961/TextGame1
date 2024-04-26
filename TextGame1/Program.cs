@@ -70,9 +70,6 @@ namespace TextGame1
                         break;
                 }
             }
-
-
-
         }
 
         static void StatusMenu(Character character)
@@ -125,7 +122,7 @@ namespace TextGame1
                 case 0:
                     break;
                 case 1:
-                    while (InventoryManagementMenu(character, 0) != 0) {; }
+                    while (EquipManagement(character, 0) != 0) {; }
                     break;
                 case 2:
                     //while (InventoryManagementMenu(character, 1) != 0) {; }
@@ -135,7 +132,7 @@ namespace TextGame1
             return input;
         }
 
-        static int InventoryManagementMenu(Character character, int mode)
+        static int EquipManagement(Character character, int mode)
         {
             int input;
             string modeString = "";
@@ -150,12 +147,14 @@ namespace TextGame1
                     Console.WriteLine("보유 중인 아이템을 장착/해제할 수 있습니다.\n");
                     modeString += "장착/해제";
                     break;
+                    /*
                 case 1:
                     Console.WriteLine("인벤토리 - 아이템 버리기");
                     Console.ResetColor();
                     Console.WriteLine("보유 중인 아이템을 버릴 수 있습니다.\n");
                     modeString += "버리기";
                     break;
+                    */
             }
             Console.WriteLine("[아이템 목록]");
             character.Inventory.PrintItems();
@@ -182,9 +181,7 @@ namespace TextGame1
                         {
                             //아이템 해제
                             character.UnequipItem(input);
-
                         }
-
                         character.Inventory.DeleteItem(input);
                     }
                     break;
@@ -195,43 +192,6 @@ namespace TextGame1
             return input;
         }
 
-        static int ShopMenu(Character character, Shop shop)
-        {
-            int input;
-
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("상점");
-            Console.ResetColor();
-            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.\n");
-
-            Console.WriteLine("보유 골드");
-            Console.WriteLine($"{character.Gold} G\n");
-            Console.WriteLine("[아이템 목록]");
-
-            //shop.PrintShopItems();
-
-            Console.WriteLine("\n1. 아이템 구매\n2. 아이템 판매\n0. 나가기");
-
-            while (int.TryParse(Console.ReadLine(), out input) == false || input < 0 || input > 3)
-            {
-                Console.WriteLine("\n잘못된 입력입니다.");
-                Console.Write("원하시는 행동을 입력해주세요.\n >> ");
-            }
-
-            switch (input)
-            {
-                case 1:
-                    //shop.BuyItem(character)
-                    break;
-                case 2:
-                    //shop.SellItem(character)
-                    break;
-            }
-
-            return input;
-        }
-        
         
     }
 
