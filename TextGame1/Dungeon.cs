@@ -11,7 +11,7 @@ namespace TextGame1
         private static int difficulty;
         private static int numOfDungeons = 3;
         private static string[] dungeonName = { "쉬운 던전", "일반 던전", "어려운 던전" };
-        private static int[] recommendDEF = { 5, 11, 17 };
+        private static float[] recommendDEF = { 5, 11, 17 };
         private static int[] defaultReward = { 1000, 1700, 2500 };
 
         public static int DungeonMenu(Character character)
@@ -91,8 +91,8 @@ namespace TextGame1
 
             //체력 손실
             Console.Write($"체력 {character.Status[(int)eStatus.HP]} -> ");
-            int diffDEF = character.Status[(int)eStatus.DEF] - recommendDEF[difficulty]; // 방어력 - 던전 권장 방어력
-            character.Status[(int)eStatus.HP] -= random.Next(20 - diffDEF, 36 - diffDEF);
+            float diffDEF = character.Status[(int)eStatus.DEF] - recommendDEF[difficulty]; // 방어력 - 던전 권장 방어력
+            character.Status[(int)eStatus.HP] -= random.Next(20 - (int)diffDEF, 36 - (int)diffDEF);
             if(character.Status[(int)eStatus.HP] < 0) // 체력 0 미만으로 떨어지지 않음
             {
                 character.Status[(int)eStatus.HP] = 0;
@@ -102,7 +102,9 @@ namespace TextGame1
             //클리어 골드 보상
             //Range(공격력~공격력*2) % 만큼의 추가 보상
             Console.Write($"Gold {character.Gold} G -> ");
-            float bonusRewardRate = 1 + (random.Next(character.Status[(int)eStatus.ATK], character.Status[(int)eStatus.ATK] * 2) * 0.01f);
+            float min = character.Status[(int)eStatus.ATK] * 0.01f;
+            float max = character.Status[(int)eStatus.ATK] * 2 * 0.01f;
+            float bonusRewardRate = 1 + (float)((random.NextDouble() * (max - min)) + min) * 0.01f;
             int reward = (int)(defaultReward[difficulty] * bonusRewardRate);
             character.Gold += reward;
             Console.WriteLine($"{character.Gold} G");

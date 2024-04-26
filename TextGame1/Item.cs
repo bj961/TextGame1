@@ -29,18 +29,18 @@ namespace TextGame1
         public string Name { get; set; }
         public int Cost { get; set; }
       
-        public Dictionary<eStatus, int> EquipStatus { get; set; }
+        public Dictionary<eStatus, float> EquipStatus { get; set; }
 
         public string Description { get; set; } = "";
         public bool IsEquipped { get; set; } = false;
         public eItemType ItemType { get; set; }
         
-        public Item(int id, string name, int cost, eItemType itemType, Dictionary<eStatus, int> equipStatus, string description)
+        public Item(int id, string name, int cost, eItemType itemType, Dictionary<eStatus, float> equipStatus, string description)
         {
             ID = id;
             Name = name;
             Cost = cost;
-            EquipStatus = new Dictionary<eStatus, int>(equipStatus);
+            EquipStatus = new Dictionary<eStatus, float>(equipStatus);
             Description = description;
             ItemType = itemType;
         }
@@ -50,7 +50,7 @@ namespace TextGame1
             ID = item.ID;
             Name = item.Name;
             Cost = item.Cost;
-            EquipStatus = new Dictionary<eStatus, int>(item.EquipStatus);
+            EquipStatus = new Dictionary<eStatus, float>(item.EquipStatus);
             Description = item.Description;
             IsEquipped = item.IsEquipped;
             ItemType = item.ItemType;

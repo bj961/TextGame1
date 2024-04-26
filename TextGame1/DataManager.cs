@@ -38,7 +38,7 @@ namespace TextGame1
                 string name = fields[1];
                 int cost = int.Parse(fields[2]);
                 eItemType itemType = (eItemType)Enum.Parse(typeof(eItemType), fields[3]);
-                Dictionary<eStatus, int> stats = new Dictionary<eStatus, int> { };
+                Dictionary<eStatus, float> stats = new Dictionary<eStatus, float> { };
 
                 if (!string.IsNullOrWhiteSpace(fields[4]))
                 {

@@ -35,28 +35,28 @@ namespace TextGame1
         public string Name { get; set; }
         public int Level { get; set; }
         public int Exp { get; set; }
-        public int[] Status { get; set; } //캐릭터 스탯
+        public float[] Status { get; set; } //캐릭터 스탯
         public int Gold { get; set; } //소지 골드
         public string CharacterClass { get; set; } //캐릭터 직업
        
         public Inventory Inventory { get; set; }
         private Dictionary<eItemType, int> equippedItems = new Dictionary<eItemType, int>(); //<아이템 착용 부위, 해당 아이템 인벤토리 idx>
         
-        private int[] equippedItemStat; //아이템으로 변동된 스탯
+        private float[] equippedItemStat; //아이템으로 변동된 스탯
 
         public Character(string name)
         {
             Name = name;
             Level = 1;
             Exp = 0;
-            Status = new int[Enum.GetNames(typeof(eStatus)).Length];
+            Status = new float[Enum.GetNames(typeof(eStatus)).Length];
             Status[(int)eStatus.HP] = 100;
             Status[(int)eStatus.ATK] = 10;
             Status[(int)eStatus.DEF] = 5;
             Gold = 1500;
             CharacterClass = "전사";
             Inventory = new Inventory();
-            equippedItemStat = new int[Enum.GetNames(typeof(eStatus)).Length];
+            equippedItemStat = new float[Enum.GetNames(typeof(eStatus)).Length];
             equippedItemStat[(int)eStatus.HP] = 0;
             equippedItemStat[(int)eStatus.ATK] = 0;
             equippedItemStat[(int)eStatus.DEF] = 0;
